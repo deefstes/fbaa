@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcService";
+
+package fbaa;
+
+import "google/protobuf/empty.proto";
+
+// The Fantastic Beasts Adoption Agency service definition.
+service FBAA {
+    // Adds a creature
+    rpc AddCreature (Creature) returns (google.protobuf.Empty) {}
+
+    // List creatures
+    rpc ListCreatures (ListCreatureRequest) returns (stream Creature) {}
+
+    // Gets a creature
+    rpc GetCreature (GetCreatureRequest) returns (Creature) {}
+
+    // Reserves a creature
+    rpc ReserveCreature (ReserveCreatureRequest) returns (google.protobuf.Empty) {}
+}
+
+message Creature {
+    string id = 1;
+    string name = 2;
+    Rarity rarity = 3;
+    string species = 4;
+    string description = 5;
+    repeated SpecialAbility abilities = 6;
+    bool available = 7;
+    map<string, string> attributes = 8;
+}
+
+enum Rarity {
+    COMMON = 0;
+    UNCOMMON = 1;
+    RARE = 2;
+    LEGENDARY = 3;
+}
+
+enum SpecialAbility {
+    FLYING = 0;
+    TELEPORTATION = 1;
+    INVISIBILITY = 2;
+    SHAPESHIFTING = 3;
+    FIRE_BREATHING = 4;
+    TELEPATHY = 5;
+    ICE_MAGIC = 6;
+    ELECTRIC_DISCHARGE = 7;
+    REGENERATION = 8;
+}
+
+message ListCreatureRequest {
+    // Filter fantastic beasts by rarity.
+    repeated Rarity rarity = 1;
+    
+    // Filter fantastic beasts by special abilities.
+    repeated SpecialAbility ability = 2;
+    
+    // Filter fantastic beasts by availability.
+    bool available = 3;
+}
+
+message GetCreatureRequest {
+    string id = 1;
+}
+
+message ReserveCreatureRequest {
+    string id = 1;
+}
