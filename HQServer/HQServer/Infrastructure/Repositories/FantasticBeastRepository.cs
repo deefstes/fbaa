@@ -43,7 +43,7 @@ namespace GrpcService.Infrastructure.Repositories
 			return response;
 		}
 
-        public RepoResponse ReserveCreature(string id)
+        public RepoResponse ReserveCreature(string id, string branchId)
 		{
 			if (!_creatures.ContainsKey(id))
 				return RepoResponse.NotFound;
@@ -52,6 +52,7 @@ namespace GrpcService.Infrastructure.Repositories
 				return RepoResponse.NotAvailable;
 
 			_creatures[id].Available = false;
+			_creatures[id].BranchId = branchId;
 
 			return RepoResponse.Success;
 		}
@@ -59,12 +60,14 @@ namespace GrpcService.Infrastructure.Repositories
         private Dictionary<string, CreatureDbModel> SeedRepository()
         {
             var creatures = new Dictionary<string, CreatureDbModel>();
+			//return creatures;
             creatures["b6f1f876-8e2f-4c59-a65c-68d1db9e1d54"] = new CreatureDbModel(@"{
                 ""Id"": ""b6f1f876-8e2f-4c59-a65c-68d1db9e1d54"",
                 ""Name"": ""Mystic Griffin"",
                 ""Rarity"": ""Legendary"",
                 ""Species"": ""Griffin"",
                 ""Description"": ""A majestic creature with the body of a lion and the head and wings of an eagle."",
+                ""Age"": 128,
                 ""Abilities"": [
                     ""Flying"",
                     ""Telepathy""
@@ -81,7 +84,8 @@ namespace GrpcService.Infrastructure.Repositories
 				""Rarity"": ""Legendary"",
 				""Species"": ""Phoenix"",
 				""Description"": ""A majestic bird that bursts into flames upon death and is reborn from its ashes."",
-				""Abilities"": [""FireBreathing"", ""Regeneration""],
+				""Age"": 1482,
+                ""Abilities"": [""FireBreathing"", ""Regeneration""],
 				""Available"": true,
 				""Attributes"": {
 					""Strength"": ""Immunity to fire and exceptional healing Abilities."",
@@ -94,7 +98,8 @@ namespace GrpcService.Infrastructure.Repositories
 				""Rarity"": ""RARE"",
 				""Species"": ""Serpent"",
 				""Description"": ""An ethereal serpent that glIdes through shadows and phases through solId objects."",
-				""Abilities"": [""Invisibility"", ""Shapeshifting""],
+				""Age"": 325,
+                ""Abilities"": [""Invisibility"", ""Shapeshifting""],
 				""Available"": true,
 				""Attributes"": {
 					""Aspect"": ""Can manipulate shadows to create illusions and confusion."",
@@ -107,7 +112,8 @@ namespace GrpcService.Infrastructure.Repositories
 				""Rarity"": ""UNCOMMON"",
 				""Species"": ""Gargoyle"",
 				""Description"": ""A stone creature brought to life by ancient curses, guarding secrets and treasures."",
-				""Abilities"": [""Flying"", ""Teleportation""],
+				""Age"": 7100,
+                ""Abilities"": [""Flying"", ""Teleportation""],
 				""Available"": false,
 				""Attributes"": {
 					""Guardian"": ""Protects hIdden treasures and cursed artifacts."",
@@ -120,7 +126,8 @@ namespace GrpcService.Infrastructure.Repositories
 				""Rarity"": ""COMMON"",
 				""Species"": ""Unicorn"",
 				""Description"": ""A gentle creature with a spiral horn and the power to manipulate wind and weather."",
-				""Abilities"": [""Flying"", ""Telepathy""],
+				""Age"": 12,
+                ""Abilities"": [""Flying"", ""Telepathy""],
 				""Available"": true,
 				""Attributes"": {
 					""Nature Affinity"": ""Harmony with natural elements and affinity for serene environments."",
@@ -133,7 +140,8 @@ namespace GrpcService.Infrastructure.Repositories
 				""Rarity"": ""RARE"",
 				""Species"": ""Sphinx"",
 				""Description"": ""A wise and enigmatic creature with the body of a lion and the wings of an eagle."",
-				""Abilities"": [""Telepathy""],
+				""Age"": 4000,
+                ""Abilities"": [""Telepathy""],
 				""Available"": true,
 				""Attributes"": {
 					""RIddles"": ""Known for posing complex rIddles and granting wisdom to those who solve them.""
@@ -145,7 +153,8 @@ namespace GrpcService.Infrastructure.Repositories
 				""Rarity"": ""LEGENDARY"",
 				""Species"": ""Dragon"",
 				""Description"": ""A colossal dragon that breathes colorful flames and dances through the night sky."",
-				""Abilities"": [""Flying"", ""FireBreathing"", ""Shapeshifting""],
+				""Age"": 719,
+                ""Abilities"": [""Flying"", ""FireBreathing"", ""Shapeshifting""],
 				""Available"": true,
 				""Attributes"": {
 					""Aurora Flames"": ""Breathes flames that create mesmerizing auroras in the sky."",
@@ -158,7 +167,8 @@ namespace GrpcService.Infrastructure.Repositories
 				""Rarity"": ""UNCOMMON"",
 				""Species"": ""Nymph"",
 				""Description"": ""An ethereal water spirit with the ability to control and protect aquatic ecosystems."",
-				""Abilities"": [""IceMagic"", ""Teleportation""],
+				""Age"": 69,
+                ""Abilities"": [""IceMagic"", ""Teleportation""],
 				""Available"": true,
 				""Attributes"": {
 					""Protector of Waters"": ""Ensures balance and harmony in underwater ecosystems."",
@@ -171,7 +181,8 @@ namespace GrpcService.Infrastructure.Repositories
 				""Rarity"": ""COMMON"",
 				""Species"": ""Sprite"",
 				""Description"": ""A mischievous sprite that leaves behind trails of glowing embers as it dashes about."",
-				""Abilities"": [""IceMagic""],
+				""Age"": 3,
+                ""Abilities"": [""IceMagic""],
 				""Available"": true
 			}");
             creatures["8d9c7b5a-6e4d-3f1a-2b8c-9e7d5c6b4a"] = new CreatureDbModel(@"{
@@ -180,7 +191,8 @@ namespace GrpcService.Infrastructure.Repositories
 				""Rarity"": ""UNCOMMON"",
 				""Species"": ""Owl"",
 				""Description"": ""An owl that glows with the soft light of the moon and is associated with night wisdom."",
-				""Abilities"": [""Flying"", ""Telepathy""],
+				""Age"": 5,
+                ""Abilities"": [""Flying"", ""Telepathy""],
 				""Available"": true,
 				""Attributes"": {
 				""Messenger of Dreams"": ""Conveys messages and insights through dreams.""

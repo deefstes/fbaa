@@ -7,7 +7,7 @@ namespace GrpcService.Core.Interfaces
         RepoResponse AddCreature(CreatureDbModel creature);
         CreatureDbModel GetCreatureById(string id);
         List<CreatureDbModel> ListCreatures();
-        RepoResponse ReserveCreature(string id);
+        RepoResponse ReserveCreature(string id, string branchId);
     }
 
     public enum RepoResponse

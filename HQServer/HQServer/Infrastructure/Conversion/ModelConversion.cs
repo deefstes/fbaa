@@ -1,19 +1,23 @@
 ﻿using GrpcService.Core.Models;
+using Google.Protobuf.WellKnownTypes;
 
 namespace GrpcService.Infrastructure.Conversion
 {
     public static class ModelConversion
     {
-        public static Creature ToGrpcModel(CreatureDbModel dbModel)
+        public static CreatureResponse ToGrpcModel(CreatureDbModel dbModel)
         {
-            var c = new Creature
+            var c = new CreatureResponse
             {
                 Id = dbModel.Id,
+                DateAdded = Timestamp.FromDateTime(dbModel.DateAdded),
                 Name = dbModel.Name,
                 Rarity = (Rarity)dbModel.Rarity,
                 Species = dbModel.Species,
                 Description = dbModel.Description,
-                Available = dbModel.Available
+                Age = dbModel.Age,
+                Available = dbModel.Available,
+                BranchId = dbModel.BranchId ?? "",
             };
             if (dbModel.Abilities != null)
             {
@@ -33,18 +37,20 @@ namespace GrpcService.Infrastructure.Conversion
             return c;
         }
 
-        public static CreatureDbModel ToDbModel(Creature grpcModel)
+        public static CreatureDbModel ToDbModel(AddCreatureRequest grpcModel)
         {
             var c = new CreatureDbModel
             {
-                Id = grpcModel.Id,
+                Id = Guid.NewGuid().ToString(),
+                DateAdded = DateTime.UtcNow,
                 Name = grpcModel.Name,
                 Rarity = (Core.Models.Rarity)grpcModel.Rarity,
                 Species = grpcModel.Species,
                 Description = grpcModel.Description,
-                Available = grpcModel.Available,
+                Age = grpcModel.Age,
                 Abilities = new List<Core.Models.SpecialAbility>(),
-                Attributes = new Dictionary<string, string>()
+                Attributes = new Dictionary<string, string>(),
+                Available = true
             };
             if (grpcModel.Abilities != null)
             {

@@ -18,7 +18,7 @@ namespace GrpcService.Application.Services
             _beastRepository = beastRepository;
         }
 
-        public override Task<Empty> AddCreature(Creature request, ServerCallContext context)
+        public override Task<Empty> AddCreature(AddCreatureRequest request, ServerCallContext context)
         {
             switch (_beastRepository.AddCreature(ModelConversion.ToDbModel(request)))
             {
@@ -31,7 +31,7 @@ namespace GrpcService.Application.Services
             }
         }
 
-        public override Task<Creature> GetCreature(GetCreatureRequest request, ServerCallContext context)
+        public override Task<CreatureResponse> GetCreature(GetCreatureRequest request, ServerCallContext context)
         {
             var creature = _beastRepository.GetCreatureById(request.Id);
             if (creature != null)
@@ -44,7 +44,7 @@ namespace GrpcService.Application.Services
             }
         }
 
-        public override async Task ListCreatures(ListCreatureRequest request, IServerStreamWriter<Creature> responseStream, ServerCallContext context)
+        public override async Task ListCreatures(ListCreatureRequest request, IServerStreamWriter<CreatureResponse> responseStream, ServerCallContext context)
         {
 
             foreach (var creature in _beastRepository.ListCreatures())
@@ -62,14 +62,18 @@ namespace GrpcService.Application.Services
 
                 bool matchesAvailability = request.Available == creature.Available;
 
-                if (matchesRarity && matchesAbilities && matchesAvailability)
+                bool matchesBranch = request.BranchId == "";
+                if (!matchesBranch)
+                    matchesBranch = request.BranchId == (creature.BranchId??"");
+
+                if (matchesRarity && matchesAbilities && matchesAvailability && matchesBranch)
                     await responseStream.WriteAsync(ModelConversion.ToGrpcModel(creature));
             }
         }
 
         public override Task<Empty> ReserveCreature(ReserveCreatureRequest request, ServerCallContext context)
         {
-            switch (_beastRepository.ReserveCreature(request.Id))
+            switch (_beastRepository.ReserveCreature(request.Id, request.BranchId))
             {
                 case RepoResponse.Success:
                     return Task.FromResult(new Empty());
