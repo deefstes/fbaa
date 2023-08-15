@@ -30,14 +30,13 @@ func NewGrpcClient(baseUrl string, port int) (GrpcClient, error) {
 }
 
 func (c *GrpcClient) AddCreature(creature models.Creature) error {
-	grpcCreature := Creature{
-		Id:          creature.Id,
+	grpcCreature := AddCreatureRequest{
 		Name:        creature.Name,
 		Rarity:      Rarity(creature.Rarity),
 		Species:     creature.Species,
 		Description: creature.Description,
-		Available:   creature.Available,
 		Attributes:  creature.Attributes,
+		Age:         creature.Age,
 	}
 
 	for _, a := range creature.Abilities {

@@ -24,11 +24,11 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type FBAAClient interface {
 	// Adds a creature
-	AddCreature(ctx context.Context, in *Creature, opts ...grpc.CallOption) (*empty.Empty, error)
+	AddCreature(ctx context.Context, in *AddCreatureRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// List creatures
 	ListCreatures(ctx context.Context, in *ListCreatureRequest, opts ...grpc.CallOption) (FBAA_ListCreaturesClient, error)
 	// Gets a creature
-	GetCreature(ctx context.Context, in *GetCreatureRequest, opts ...grpc.CallOption) (*Creature, error)
+	GetCreature(ctx context.Context, in *GetCreatureRequest, opts ...grpc.CallOption) (*CreatureResponse, error)
 	// Reserves a creature
 	ReserveCreature(ctx context.Context, in *ReserveCreatureRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 }
@@ -41,7 +41,7 @@ func NewFBAAClient(cc grpc.ClientConnInterface) FBAAClient {
 	return &fBAAClient{cc}
 }
 
-func (c *fBAAClient) AddCreature(ctx context.Context, in *Creature, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *fBAAClient) AddCreature(ctx context.Context, in *AddCreatureRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/fbaa.FBAA/AddCreature", in, out, opts...)
 	if err != nil {
@@ -66,7 +66,7 @@ func (c *fBAAClient) ListCreatures(ctx context.Context, in *ListCreatureRequest,
 }
 
 type FBAA_ListCreaturesClient interface {
-	Recv() (*Creature, error)
+	Recv() (*CreatureResponse, error)
 	grpc.ClientStream
 }
 
@@ -74,16 +74,16 @@ type fBAAListCreaturesClient struct {
 	grpc.ClientStream
 }
 
-func (x *fBAAListCreaturesClient) Recv() (*Creature, error) {
-	m := new(Creature)
+func (x *fBAAListCreaturesClient) Recv() (*CreatureResponse, error) {
+	m := new(CreatureResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func (c *fBAAClient) GetCreature(ctx context.Context, in *GetCreatureRequest, opts ...grpc.CallOption) (*Creature, error) {
-	out := new(Creature)
+func (c *fBAAClient) GetCreature(ctx context.Context, in *GetCreatureRequest, opts ...grpc.CallOption) (*CreatureResponse, error) {
+	out := new(CreatureResponse)
 	err := c.cc.Invoke(ctx, "/fbaa.FBAA/GetCreature", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -105,11 +105,11 @@ func (c *fBAAClient) ReserveCreature(ctx context.Context, in *ReserveCreatureReq
 // for forward compatibility
 type FBAAServer interface {
 	// Adds a creature
-	AddCreature(context.Context, *Creature) (*empty.Empty, error)
+	AddCreature(context.Context, *AddCreatureRequest) (*empty.Empty, error)
 	// List creatures
 	ListCreatures(*ListCreatureRequest, FBAA_ListCreaturesServer) error
 	// Gets a creature
-	GetCreature(context.Context, *GetCreatureRequest) (*Creature, error)
+	GetCreature(context.Context, *GetCreatureRequest) (*CreatureResponse, error)
 	// Reserves a creature
 	ReserveCreature(context.Context, *ReserveCreatureRequest) (*empty.Empty, error)
 }
@@ -118,13 +118,13 @@ type FBAAServer interface {
 type UnimplementedFBAAServer struct {
 }
 
-func (UnimplementedFBAAServer) AddCreature(context.Context, *Creature) (*empty.Empty, error) {
+func (UnimplementedFBAAServer) AddCreature(context.Context, *AddCreatureRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddCreature not implemented")
 }
 func (UnimplementedFBAAServer) ListCreatures(*ListCreatureRequest, FBAA_ListCreaturesServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListCreatures not implemented")
 }
-func (UnimplementedFBAAServer) GetCreature(context.Context, *GetCreatureRequest) (*Creature, error) {
+func (UnimplementedFBAAServer) GetCreature(context.Context, *GetCreatureRequest) (*CreatureResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCreature not implemented")
 }
 func (UnimplementedFBAAServer) ReserveCreature(context.Context, *ReserveCreatureRequest) (*empty.Empty, error) {
@@ -143,7 +143,7 @@ func RegisterFBAAServer(s grpc.ServiceRegistrar, srv FBAAServer) {
 }
 
 func _FBAA_AddCreature_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Creature)
+	in := new(AddCreatureRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -155,7 +155,7 @@ func _FBAA_AddCreature_Handler(srv interface{}, ctx context.Context, dec func(in
 		FullMethod: "/fbaa.FBAA/AddCreature",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FBAAServer).AddCreature(ctx, req.(*Creature))
+		return srv.(FBAAServer).AddCreature(ctx, req.(*AddCreatureRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -169,7 +169,7 @@ func _FBAA_ListCreatures_Handler(srv interface{}, stream grpc.ServerStream) erro
 }
 
 type FBAA_ListCreaturesServer interface {
-	Send(*Creature) error
+	Send(*CreatureResponse) error
 	grpc.ServerStream
 }
 
@@ -177,7 +177,7 @@ type fBAAListCreaturesServer struct {
 	grpc.ServerStream
 }
 
-func (x *fBAAListCreaturesServer) Send(m *Creature) error {
+func (x *fBAAListCreaturesServer) Send(m *CreatureResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 

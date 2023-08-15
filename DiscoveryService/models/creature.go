@@ -1,14 +1,19 @@
 package models
 
+import "time"
+
 type Creature struct {
 	Id          string
+	DateAdded   time.Time
 	Name        string
 	Rarity      Rarity
 	Species     string
 	Description string
+	Age         int32
 	Abilities   []SpecialAbility
-	Available   bool
 	Attributes  map[string]string
+	Available   bool
+	BranchId    string
 }
 
 type Rarity int32

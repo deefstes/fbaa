@@ -11,6 +11,11 @@ type Randomizer struct {
 	namePostfix    []string
 	speciesPrefix  []string
 	speciesPostfix []string
+	adverba        []string
+	adverbb        []string
+	adjective      []string
+	tendency       []string
+	verb           []string
 }
 
 func NewRandomizer() Randomizer {
@@ -135,6 +140,120 @@ func NewRandomizer() Randomizer {
 			"bara",
 			"bri",
 		},
+		adverba: []string{
+			"An exceptionally",
+			"An incredibly",
+			"A terribly",
+			"A remarkably",
+			"An unbelievably",
+			"An insanely",
+			"An awfully",
+			"A quite",
+			"A truly",
+			"A rather",
+			"An exceedingly",
+			"An immensely",
+			"An extremely",
+			"An intensely",
+			"An unusually",
+			"A moderately",
+			"A very",
+			"A minimally",
+			"A nearly",
+			"A totally",
+		},
+		adverbb: []string{
+			"loudly",
+			"noisily",
+			"quietly",
+			"stealthily",
+			"briskly",
+			"carefully",
+			"efficiently",
+			"gracefully",
+			"hastily",
+			"intently",
+			"lazily",
+			"quickly",
+			"rapidly",
+			"slowly",
+			"steadily",
+			"swiftly",
+			"thoroughly",
+			"vigorously",
+			"wisely",
+			"deliberately",
+			"firmly",
+			"gently",
+			"harshly",
+			"patiently",
+		},
+		adjective: []string{
+			"beautiful",
+			"strong",
+			"clever",
+			"bright",
+			"gentle",
+			"creative",
+			"joyful",
+			"mysterious",
+			"energetic",
+			"sincere",
+			"enthusiastic",
+			"reliable",
+			"delicious",
+			"peaceful",
+			"playful",
+			"ancient",
+			"confident",
+			"cautious",
+			"grateful",
+			"curious",
+		},
+		tendency: []string{
+			"a disposition to",
+			"a propensity for",
+			"a habit of",
+			"an affinity for",
+			"an inclination to",
+			"a bent of",
+			"an orientation of",
+			"an instinct of",
+			"a predisposition to",
+			"a penchant to",
+			"a tendency of",
+			"a preference for",
+			"a liking of",
+			"a predilection for",
+			"a partiality to",
+			"a proclivity to",
+			"a passion for",
+			"an aptitude for",
+			"a taste for",
+			"a prejudice for",
+		},
+		verb: []string{
+			"running",
+			"singing",
+			"reading",
+			"dancing",
+			"writing",
+			"cooking",
+			"laughing",
+			"swimming",
+			"talking",
+			"sleeping",
+			"playing",
+			"painting",
+			"eating",
+			"watching",
+			"studying",
+			"eating",
+			"working",
+			"listening",
+			"jumping",
+			"munching",
+		},
 	}
 }
 
@@ -147,19 +266,35 @@ func (c *Randomizer) randomAbility() models.SpecialAbility {
 }
 
 func (c *Randomizer) randomName() string {
-	return fmt.Sprintf("%s%s", c.namePrefix[rand.Intn(len(c.namePrefix))], c.namePostfix[rand.Intn(len(c.namePostfix))])
+	return fmt.Sprintf("%s%s", pickRandomItem(c.namePrefix), pickRandomItem(c.namePostfix))
 }
 
 func (c *Randomizer) randomSpecies() string {
-	return fmt.Sprintf("%s%s", c.speciesPrefix[rand.Intn(len(c.speciesPrefix))], c.speciesPostfix[rand.Intn(len(c.speciesPostfix))])
+	return fmt.Sprintf("%s%s", pickRandomItem(c.speciesPrefix), pickRandomItem(c.speciesPostfix))
+}
+
+func (c *Randomizer) randomDescription() string {
+	return fmt.Sprintf(
+		"%s %s creature that has %s %s %s.",
+		pickRandomItem(c.adverba),
+		pickRandomItem(c.adjective),
+		pickRandomItem(c.tendency),
+		pickRandomItem(c.verb),
+		pickRandomItem(c.adverbb),
+	)
+}
+
+func (c *Randomizer) randomAge() int32 {
+	return int32(rand.Intn(10000) + 1)
 }
 
 func (c *Randomizer) RandomCreature() models.Creature {
 	creature := models.Creature{
-		Name:      c.randomName(),
-		Species:   c.randomSpecies(),
-		Rarity:    c.randomRarity(),
-		Available: true,
+		Name:        c.randomName(),
+		Species:     c.randomSpecies(),
+		Rarity:      c.randomRarity(),
+		Description: c.randomDescription(),
+		Age:         c.randomAge(),
 	}
 
 	for i := 0; i < rand.Intn(2)+1; i++ {
@@ -167,4 +302,8 @@ func (c *Randomizer) RandomCreature() models.Creature {
 	}
 
 	return creature
+}
+
+func pickRandomItem(items []string) string {
+	return items[rand.Intn(len(items))]
 }

@@ -12,7 +12,7 @@
 			"program": "${workspaceFolder}/cmd/",
 			"env": {
 				"FBAA_ADDRESS": "localhost",
-				"FBAA_PORT": "4916"
+				"FBAA_PORT": "49154"
 			}
 		}
 	]
