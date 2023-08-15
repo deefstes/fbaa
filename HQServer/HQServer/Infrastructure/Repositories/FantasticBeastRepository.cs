@@ -144,7 +144,7 @@ namespace GrpcService.Infrastructure.Repositories
                 ""Abilities"": [""Telepathy""],
 				""Available"": true,
 				""Attributes"": {
-					""RIddles"": ""Known for posing complex rIddles and granting wisdom to those who solve them.""
+					""Riddles"": ""Known for posing complex riddles and granting wisdom to those who solve them.""
 				}
 			}");
             creatures["4e5d6c7b-2a1f-4d3c-9e8b-7f6a5d4e3c2"] = new CreatureDbModel(@"{
