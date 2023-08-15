@@ -1,35 +1,73 @@
 syntax = "proto3";
 
 option csharp_namespace = "GrpcService";
+option go_package = "./fbaa";
 
 package fbaa;
 
 import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
 
 // The Fantastic Beasts Adoption Agency service definition.
 service FBAA {
     // Adds a creature
-    rpc AddCreature (Creature) returns (google.protobuf.Empty) {}
+    rpc AddCreature (AddCreatureRequest) returns (google.protobuf.Empty) {}
 
     // List creatures
-    rpc ListCreatures (ListCreatureRequest) returns (stream Creature) {}
+    rpc ListCreatures (ListCreatureRequest) returns (stream CreatureResponse) {}
 
     // Gets a creature
-    rpc GetCreature (GetCreatureRequest) returns (Creature) {}
+    rpc GetCreature (GetCreatureRequest) returns (CreatureResponse) {}
 
     // Reserves a creature
     rpc ReserveCreature (ReserveCreatureRequest) returns (google.protobuf.Empty) {}
 }
 
-message Creature {
+message CreatureResponse {
     string id = 1;
-    string name = 2;
-    Rarity rarity = 3;
-    string species = 4;
-    string description = 5;
+    google.protobuf.Timestamp dateAdded = 2;
+    string name = 3;
+    Rarity rarity = 4;
+    string species = 5;
+    string description = 6;
+    int32 age = 7;
+    repeated SpecialAbility abilities = 8;
+    map<string, string> attributes = 9;
+    bool available = 10;
+    string branchId = 11;
+}
+
+message AddCreatureRequest {
+    string name = 1;
+    Rarity rarity = 2;
+    string species = 3;
+    string description = 4;
+    int32 age = 5;
     repeated SpecialAbility abilities = 6;
-    bool available = 7;
-    map<string, string> attributes = 8;
+    map<string, string> attributes = 7;
+}
+
+message ListCreatureRequest {
+    // Filter fantastic beasts by rarity.
+    repeated Rarity rarity = 1;
+    
+    // Filter fantastic beasts by special abilities.
+    repeated SpecialAbility ability = 2;
+    
+    // Filter fantastic beasts by availability.
+    bool available = 3;
+
+    // Filter fantastic beasts by branch.
+    string branchId = 4;
+}
+
+message GetCreatureRequest {
+    string id = 1;
+}
+
+message ReserveCreatureRequest {
+    string id = 1;
+    string branchId = 2;
 }
 
 enum Rarity {
@@ -49,23 +87,4 @@ enum SpecialAbility {
     ICE_MAGIC = 6;
     ELECTRIC_DISCHARGE = 7;
     REGENERATION = 8;
-}
-
-message ListCreatureRequest {
-    // Filter fantastic beasts by rarity.
-    repeated Rarity rarity = 1;
-    
-    // Filter fantastic beasts by special abilities.
-    repeated SpecialAbility ability = 2;
-    
-    // Filter fantastic beasts by availability.
-    bool available = 3;
-}
-
-message GetCreatureRequest {
-    string id = 1;
-}
-
-message ReserveCreatureRequest {
-    string id = 1;
 }
