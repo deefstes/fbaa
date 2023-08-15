@@ -7,8 +7,9 @@ import (
 )
 
 type Configuration struct {
-	Address string
-	Port    int
+	Address  string
+	Port     int
+	Interval int
 }
 
 type DBConfig struct {
@@ -34,6 +35,17 @@ func ReadConfig(prefix string) (Configuration, error) {
 	if cfg.Address == "" {
 		cfg.Address = "127.0.0.1"
 	}
+
+	i := os.Getenv(prefix + "INTERVAL")
+	// Set port to default value of 80 if no value is provided
+	if i == "" {
+		p = "60"
+	}
+	interval, err := strconv.ParseInt(i, 10, 64)
+	if err != nil {
+		return Configuration{}, fmt.Errorf("unable to parse value for %sINTERVAL (%s)", prefix, os.Getenv(prefix+"INTERVAL"))
+	}
+	cfg.Interval = int(interval)
 
 	return cfg, nil
 }

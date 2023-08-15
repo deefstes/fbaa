@@ -1,0 +1,1 @@
+docker run -e FBAA_ADDRESS=localhost -e FBAA_PORT=8080 --rm fbaa-discovery
