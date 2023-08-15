@@ -6,17 +6,19 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /Proto
+COPY ["fbaa.proto", "."]
 WORKDIR /src
-COPY ["GrpcService/GrpcService.csproj", "GrpcService/"]
-RUN dotnet restore "GrpcService/GrpcService.csproj"
+COPY ["HQServer/HQServer.csproj", "HQServer/"]
+RUN dotnet restore "HQServer/HQServer.csproj"
 COPY . .
-WORKDIR "/src/GrpcService"
-RUN dotnet build "GrpcService.csproj" -c Release -o /app/build
+WORKDIR "/src/HQServer"
+RUN dotnet build "HQServer.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "GrpcService.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "HQServer.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "GrpcService.dll"]
+ENTRYPOINT ["dotnet", "HQServer.dll"]
