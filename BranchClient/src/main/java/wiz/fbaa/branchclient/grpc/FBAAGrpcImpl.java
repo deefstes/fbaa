@@ -13,7 +13,7 @@ import java.util.*;
 public class FBAAGrpcImpl {
 
     private final FBAAGrpc.FBAABlockingStub fbaaBlockingStub;
-    private Random random = new Random();
+    private final Random random = new Random();
 
     private final List<String> branch = new ArrayList<String>(){{
         add("Hogwarts School of Witchcraft and Wizardry");

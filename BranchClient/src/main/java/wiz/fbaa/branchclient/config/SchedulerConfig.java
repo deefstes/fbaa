@@ -14,7 +14,7 @@ public class SchedulerConfig {
 
     private final FBAAGrpcImpl fbaaGrpcImpl;
 
-    @Scheduled(initialDelay = 1000 * 3, fixedDelay = 1000*30)
+    @Scheduled(initialDelay = 1000 * 3, fixedDelay = 1000 * 30)
     public void randomlyReserveBeast() {
         try {
             fbaaGrpcImpl.randomlyReserveCreature();

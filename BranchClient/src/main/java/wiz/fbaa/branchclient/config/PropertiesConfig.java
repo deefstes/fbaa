@@ -15,5 +15,4 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "fbaa")
 public class PropertiesConfig {
     private String serverUrl;
-    private Long interval;
 }

@@ -9,4 +9,4 @@ RUN mvn -T 4 clean compile package -DskipTests=true
 RUN cp target/BranchClient-0.0.1-SNAPSHOT.jar .
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "BranchClient-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "BranchClient-0.0.1-SNAPSHOT.jar", "--spring.profiles.active=docker"]
