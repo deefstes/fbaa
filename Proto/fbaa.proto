@@ -2,6 +2,7 @@ syntax = "proto3";
 
 option csharp_namespace = "GrpcService";
 option go_package = "./fbaa";
+option java_package = "wiz.fbaa.branchclient.grpc";
 
 package fbaa;
 

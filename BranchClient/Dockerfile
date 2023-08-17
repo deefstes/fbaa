@@ -1,0 +1,12 @@
+FROM maven:3.9.3-amazoncorretto-8
+
+WORKDIR /usr/local/src/branchclient
+RUN mkdir /usr/local/src/Proto
+COPY fbaa.proto /usr/local/src/Proto
+COPY . .
+RUN mvn -T 4 clean compile package -DskipTests=true
+
+RUN cp target/BranchClient-0.0.1-SNAPSHOT.jar .
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "BranchClient-0.0.1-SNAPSHOT.jar"]
