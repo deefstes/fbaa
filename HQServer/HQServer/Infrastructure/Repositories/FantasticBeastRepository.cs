@@ -32,7 +32,7 @@ namespace GrpcService.Infrastructure.Repositories
             }
         }
 
-		public List<CreatureDbModel> ListCreatures()
+		public List<CreatureDbModel> GetCreatures()
 		{
             var response = new List<CreatureDbModel>();
 			foreach (var creature in _creatures.Values)

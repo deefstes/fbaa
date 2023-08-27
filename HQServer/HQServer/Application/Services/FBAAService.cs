@@ -44,10 +44,10 @@ namespace GrpcService.Application.Services
             }
         }
 
-        public override async Task ListCreatures(ListCreatureRequest request, IServerStreamWriter<CreatureResponse> responseStream, ServerCallContext context)
+        public override async Task StreamCreatures(StreamCreatureRequest request, IServerStreamWriter<CreatureResponse> responseStream, ServerCallContext context)
         {
 
-            foreach (var creature in _beastRepository.ListCreatures())
+            foreach (var creature in _beastRepository.GetCreatures())
             {
                 bool matchesRarity = request.Rarity.Any() ? false : true;
                 foreach(var rarity in request.Rarity)
