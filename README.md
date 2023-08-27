@@ -139,9 +139,9 @@ Click on the `Select a method` text box. It will expand and allow you to add a s
 
 ![Add service definition](/ReadMeAssets/SearchAPI.png)
 
-The available RPC methods from this API will now be displayed. Click on the `ListCreatures` method.
+The available RPC methods from this API will now be displayed. Click on the `StreamCreatures` method.
 
-![ListCreatures](/ReadMeAssets/ListCreatures.png)
+![StreamCreatures](/ReadMeAssets/StreamCreatures.png)
 
 In the message body add the following message:
 
