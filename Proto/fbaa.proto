@@ -14,8 +14,8 @@ service FBAA {
     // Adds a creature
     rpc AddCreature (AddCreatureRequest) returns (google.protobuf.Empty) {}
 
-    // List creatures
-    rpc ListCreatures (ListCreatureRequest) returns (stream CreatureResponse) {}
+    // Stream creatures
+    rpc StreamCreatures (StreamCreatureRequest) returns (stream CreatureResponse) {}
 
     // Gets a creature
     rpc GetCreature (GetCreatureRequest) returns (CreatureResponse) {}
@@ -48,7 +48,7 @@ message AddCreatureRequest {
     map<string, string> attributes = 7;
 }
 
-message ListCreatureRequest {
+message StreamCreatureRequest {
     // Filter fantastic beasts by rarity.
     repeated Rarity rarity = 1;
     
