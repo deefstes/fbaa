@@ -25,8 +25,8 @@ const _ = grpc.SupportPackageIsVersion7
 type FBAAClient interface {
 	// Adds a creature
 	AddCreature(ctx context.Context, in *AddCreatureRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// List creatures
-	ListCreatures(ctx context.Context, in *ListCreatureRequest, opts ...grpc.CallOption) (FBAA_ListCreaturesClient, error)
+	// Stream creatures
+	StreamCreatures(ctx context.Context, in *StreamCreatureRequest, opts ...grpc.CallOption) (FBAA_StreamCreaturesClient, error)
 	// Gets a creature
 	GetCreature(ctx context.Context, in *GetCreatureRequest, opts ...grpc.CallOption) (*CreatureResponse, error)
 	// Reserves a creature
@@ -50,12 +50,12 @@ func (c *fBAAClient) AddCreature(ctx context.Context, in *AddCreatureRequest, op
 	return out, nil
 }
 
-func (c *fBAAClient) ListCreatures(ctx context.Context, in *ListCreatureRequest, opts ...grpc.CallOption) (FBAA_ListCreaturesClient, error) {
-	stream, err := c.cc.NewStream(ctx, &FBAA_ServiceDesc.Streams[0], "/fbaa.FBAA/ListCreatures", opts...)
+func (c *fBAAClient) StreamCreatures(ctx context.Context, in *StreamCreatureRequest, opts ...grpc.CallOption) (FBAA_StreamCreaturesClient, error) {
+	stream, err := c.cc.NewStream(ctx, &FBAA_ServiceDesc.Streams[0], "/fbaa.FBAA/StreamCreatures", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &fBAAListCreaturesClient{stream}
+	x := &fBAAStreamCreaturesClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -65,16 +65,16 @@ func (c *fBAAClient) ListCreatures(ctx context.Context, in *ListCreatureRequest,
 	return x, nil
 }
 
-type FBAA_ListCreaturesClient interface {
+type FBAA_StreamCreaturesClient interface {
 	Recv() (*CreatureResponse, error)
 	grpc.ClientStream
 }
 
-type fBAAListCreaturesClient struct {
+type fBAAStreamCreaturesClient struct {
 	grpc.ClientStream
 }
 
-func (x *fBAAListCreaturesClient) Recv() (*CreatureResponse, error) {
+func (x *fBAAStreamCreaturesClient) Recv() (*CreatureResponse, error) {
 	m := new(CreatureResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -106,8 +106,8 @@ func (c *fBAAClient) ReserveCreature(ctx context.Context, in *ReserveCreatureReq
 type FBAAServer interface {
 	// Adds a creature
 	AddCreature(context.Context, *AddCreatureRequest) (*empty.Empty, error)
-	// List creatures
-	ListCreatures(*ListCreatureRequest, FBAA_ListCreaturesServer) error
+	// Stream creatures
+	StreamCreatures(*StreamCreatureRequest, FBAA_StreamCreaturesServer) error
 	// Gets a creature
 	GetCreature(context.Context, *GetCreatureRequest) (*CreatureResponse, error)
 	// Reserves a creature
@@ -121,8 +121,8 @@ type UnimplementedFBAAServer struct {
 func (UnimplementedFBAAServer) AddCreature(context.Context, *AddCreatureRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddCreature not implemented")
 }
-func (UnimplementedFBAAServer) ListCreatures(*ListCreatureRequest, FBAA_ListCreaturesServer) error {
-	return status.Errorf(codes.Unimplemented, "method ListCreatures not implemented")
+func (UnimplementedFBAAServer) StreamCreatures(*StreamCreatureRequest, FBAA_StreamCreaturesServer) error {
+	return status.Errorf(codes.Unimplemented, "method StreamCreatures not implemented")
 }
 func (UnimplementedFBAAServer) GetCreature(context.Context, *GetCreatureRequest) (*CreatureResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCreature not implemented")
@@ -160,24 +160,24 @@ func _FBAA_AddCreature_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
-func _FBAA_ListCreatures_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(ListCreatureRequest)
+func _FBAA_StreamCreatures_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(StreamCreatureRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(FBAAServer).ListCreatures(m, &fBAAListCreaturesServer{stream})
+	return srv.(FBAAServer).StreamCreatures(m, &fBAAStreamCreaturesServer{stream})
 }
 
-type FBAA_ListCreaturesServer interface {
+type FBAA_StreamCreaturesServer interface {
 	Send(*CreatureResponse) error
 	grpc.ServerStream
 }
 
-type fBAAListCreaturesServer struct {
+type fBAAStreamCreaturesServer struct {
 	grpc.ServerStream
 }
 
-func (x *fBAAListCreaturesServer) Send(m *CreatureResponse) error {
+func (x *fBAAStreamCreaturesServer) Send(m *CreatureResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -239,8 +239,8 @@ var FBAA_ServiceDesc = grpc.ServiceDesc{
 	},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "ListCreatures",
-			Handler:       _FBAA_ListCreatures_Handler,
+			StreamName:    "StreamCreatures",
+			Handler:       _FBAA_StreamCreatures_Handler,
 			ServerStreams: true,
 		},
 	},
