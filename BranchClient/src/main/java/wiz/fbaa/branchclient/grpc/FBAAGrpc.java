@@ -62,36 +62,36 @@ public final class FBAAGrpc {
      return getAddCreatureMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<wiz.fbaa.branchclient.grpc.Fbaa.ListCreatureRequest,
-      wiz.fbaa.branchclient.grpc.Fbaa.CreatureResponse> getListCreaturesMethod;
+  private static volatile io.grpc.MethodDescriptor<wiz.fbaa.branchclient.grpc.Fbaa.StreamCreatureRequest,
+      wiz.fbaa.branchclient.grpc.Fbaa.CreatureResponse> getStreamCreaturesMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "ListCreatures",
-      requestType = wiz.fbaa.branchclient.grpc.Fbaa.ListCreatureRequest.class,
+      fullMethodName = SERVICE_NAME + '/' + "StreamCreatures",
+      requestType = wiz.fbaa.branchclient.grpc.Fbaa.StreamCreatureRequest.class,
       responseType = wiz.fbaa.branchclient.grpc.Fbaa.CreatureResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
-  public static io.grpc.MethodDescriptor<wiz.fbaa.branchclient.grpc.Fbaa.ListCreatureRequest,
-      wiz.fbaa.branchclient.grpc.Fbaa.CreatureResponse> getListCreaturesMethod() {
-    io.grpc.MethodDescriptor<wiz.fbaa.branchclient.grpc.Fbaa.ListCreatureRequest, wiz.fbaa.branchclient.grpc.Fbaa.CreatureResponse> getListCreaturesMethod;
-    if ((getListCreaturesMethod = FBAAGrpc.getListCreaturesMethod) == null) {
+  public static io.grpc.MethodDescriptor<wiz.fbaa.branchclient.grpc.Fbaa.StreamCreatureRequest,
+      wiz.fbaa.branchclient.grpc.Fbaa.CreatureResponse> getStreamCreaturesMethod() {
+    io.grpc.MethodDescriptor<wiz.fbaa.branchclient.grpc.Fbaa.StreamCreatureRequest, wiz.fbaa.branchclient.grpc.Fbaa.CreatureResponse> getStreamCreaturesMethod;
+    if ((getStreamCreaturesMethod = FBAAGrpc.getStreamCreaturesMethod) == null) {
       synchronized (FBAAGrpc.class) {
-        if ((getListCreaturesMethod = FBAAGrpc.getListCreaturesMethod) == null) {
-          FBAAGrpc.getListCreaturesMethod = getListCreaturesMethod = 
-              io.grpc.MethodDescriptor.<wiz.fbaa.branchclient.grpc.Fbaa.ListCreatureRequest, wiz.fbaa.branchclient.grpc.Fbaa.CreatureResponse>newBuilder()
+        if ((getStreamCreaturesMethod = FBAAGrpc.getStreamCreaturesMethod) == null) {
+          FBAAGrpc.getStreamCreaturesMethod = getStreamCreaturesMethod = 
+              io.grpc.MethodDescriptor.<wiz.fbaa.branchclient.grpc.Fbaa.StreamCreatureRequest, wiz.fbaa.branchclient.grpc.Fbaa.CreatureResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
               .setFullMethodName(generateFullMethodName(
-                  "fbaa.FBAA", "ListCreatures"))
+                  "fbaa.FBAA", "StreamCreatures"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  wiz.fbaa.branchclient.grpc.Fbaa.ListCreatureRequest.getDefaultInstance()))
+                  wiz.fbaa.branchclient.grpc.Fbaa.StreamCreatureRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   wiz.fbaa.branchclient.grpc.Fbaa.CreatureResponse.getDefaultInstance()))
-                  .setSchemaDescriptor(new FBAAMethodDescriptorSupplier("ListCreatures"))
+                  .setSchemaDescriptor(new FBAAMethodDescriptorSupplier("StreamCreatures"))
                   .build();
           }
         }
      }
-     return getListCreaturesMethod;
+     return getStreamCreaturesMethod;
   }
 
   private static volatile io.grpc.MethodDescriptor<wiz.fbaa.branchclient.grpc.Fbaa.GetCreatureRequest,
@@ -200,12 +200,12 @@ public final class FBAAGrpc {
 
     /**
      * <pre>
-     * List creatures
+     * Stream creatures
      * </pre>
      */
-    public void listCreatures(wiz.fbaa.branchclient.grpc.Fbaa.ListCreatureRequest request,
+    public void streamCreatures(wiz.fbaa.branchclient.grpc.Fbaa.StreamCreatureRequest request,
         io.grpc.stub.StreamObserver<wiz.fbaa.branchclient.grpc.Fbaa.CreatureResponse> responseObserver) {
-      asyncUnimplementedUnaryCall(getListCreaturesMethod(), responseObserver);
+      asyncUnimplementedUnaryCall(getStreamCreaturesMethod(), responseObserver);
     }
 
     /**
@@ -238,12 +238,12 @@ public final class FBAAGrpc {
                 com.google.protobuf.Empty>(
                   this, METHODID_ADD_CREATURE)))
           .addMethod(
-            getListCreaturesMethod(),
+            getStreamCreaturesMethod(),
             asyncServerStreamingCall(
               new MethodHandlers<
-                wiz.fbaa.branchclient.grpc.Fbaa.ListCreatureRequest,
+                wiz.fbaa.branchclient.grpc.Fbaa.StreamCreatureRequest,
                 wiz.fbaa.branchclient.grpc.Fbaa.CreatureResponse>(
-                  this, METHODID_LIST_CREATURES)))
+                  this, METHODID_STREAM_CREATURES)))
           .addMethod(
             getGetCreatureMethod(),
             asyncUnaryCall(
@@ -296,13 +296,13 @@ public final class FBAAGrpc {
 
     /**
      * <pre>
-     * List creatures
+     * Stream creatures
      * </pre>
      */
-    public void listCreatures(wiz.fbaa.branchclient.grpc.Fbaa.ListCreatureRequest request,
+    public void streamCreatures(wiz.fbaa.branchclient.grpc.Fbaa.StreamCreatureRequest request,
         io.grpc.stub.StreamObserver<wiz.fbaa.branchclient.grpc.Fbaa.CreatureResponse> responseObserver) {
       asyncServerStreamingCall(
-          getChannel().newCall(getListCreaturesMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getStreamCreaturesMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
@@ -361,13 +361,13 @@ public final class FBAAGrpc {
 
     /**
      * <pre>
-     * List creatures
+     * Stream creatures
      * </pre>
      */
-    public java.util.Iterator<wiz.fbaa.branchclient.grpc.Fbaa.CreatureResponse> listCreatures(
-        wiz.fbaa.branchclient.grpc.Fbaa.ListCreatureRequest request) {
+    public java.util.Iterator<wiz.fbaa.branchclient.grpc.Fbaa.CreatureResponse> streamCreatures(
+        wiz.fbaa.branchclient.grpc.Fbaa.StreamCreatureRequest request) {
       return blockingServerStreamingCall(
-          getChannel(), getListCreaturesMethod(), getCallOptions(), request);
+          getChannel(), getStreamCreaturesMethod(), getCallOptions(), request);
     }
 
     /**
@@ -447,7 +447,7 @@ public final class FBAAGrpc {
   }
 
   private static final int METHODID_ADD_CREATURE = 0;
-  private static final int METHODID_LIST_CREATURES = 1;
+  private static final int METHODID_STREAM_CREATURES = 1;
   private static final int METHODID_GET_CREATURE = 2;
   private static final int METHODID_RESERVE_CREATURE = 3;
 
@@ -472,8 +472,8 @@ public final class FBAAGrpc {
           serviceImpl.addCreature((wiz.fbaa.branchclient.grpc.Fbaa.AddCreatureRequest) request,
               (io.grpc.stub.StreamObserver<com.google.protobuf.Empty>) responseObserver);
           break;
-        case METHODID_LIST_CREATURES:
-          serviceImpl.listCreatures((wiz.fbaa.branchclient.grpc.Fbaa.ListCreatureRequest) request,
+        case METHODID_STREAM_CREATURES:
+          serviceImpl.streamCreatures((wiz.fbaa.branchclient.grpc.Fbaa.StreamCreatureRequest) request,
               (io.grpc.stub.StreamObserver<wiz.fbaa.branchclient.grpc.Fbaa.CreatureResponse>) responseObserver);
           break;
         case METHODID_GET_CREATURE:
@@ -546,7 +546,7 @@ public final class FBAAGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new FBAAFileDescriptorSupplier())
               .addMethod(getAddCreatureMethod())
-              .addMethod(getListCreaturesMethod())
+              .addMethod(getStreamCreaturesMethod())
               .addMethod(getGetCreatureMethod())
               .addMethod(getReserveCreatureMethod())
               .build();
