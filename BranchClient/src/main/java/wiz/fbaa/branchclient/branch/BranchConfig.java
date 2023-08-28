@@ -48,7 +48,7 @@ public class BranchConfig {
 
     public List<Fbaa.SpecialAbility> getRandomAbilities() {
         // Randomly chooses a number between zero to the number abilities the branch is looking for
-        int numberOfAbilities = random.nextInt(zeroToAbilities + 1);
+        int numberOfAbilities = random.nextInt(zeroToAbilities);
 
         List<Fbaa.SpecialAbility> abilities = new ArrayList<>();
         if (numberOfAbilities == 0) {
@@ -56,10 +56,9 @@ public class BranchConfig {
         }
 
         for (int i = 0; i < numberOfAbilities; i++) {
-            int abilityInt = random.nextInt(Fbaa.SpecialAbility.values().length);
+            int abilityInt = random.nextInt(Fbaa.SpecialAbility.values().length - 1);
             abilities.add(Fbaa.SpecialAbility.forNumber(abilityInt));
         }
-
         return abilities;
     }
 }

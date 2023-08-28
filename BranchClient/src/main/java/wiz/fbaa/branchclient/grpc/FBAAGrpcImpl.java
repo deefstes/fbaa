@@ -40,7 +40,7 @@ public class FBAAGrpcImpl {
         log.info("Random rarity chosen [{}].", rarity.name());
 
         List<Fbaa.SpecialAbility> abilities = branch.getRandomAbilities();
-        log.info("Random abilities chosen [{}].", abilities.isEmpty() ? "Any" : abilities.stream().map(Enum::name).reduce((a, b)-> a + ", " +b).get());
+        log.info("Random abilities chosen [{}].", abilities.isEmpty()? "Any" : abilities);
 
         Fbaa.StreamCreatureRequest request = Fbaa.StreamCreatureRequest.newBuilder()
                 .setAvailable(true)
