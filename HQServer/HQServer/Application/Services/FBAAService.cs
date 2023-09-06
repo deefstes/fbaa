@@ -1,10 +1,7 @@
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using GrpcService.Core.Interfaces;
-using GrpcService.Core.Models;
 using GrpcService.Infrastructure.Conversion;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace GrpcService.Application.Services
 {

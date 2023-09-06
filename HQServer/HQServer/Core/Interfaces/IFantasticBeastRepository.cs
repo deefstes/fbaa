@@ -4,9 +4,9 @@ namespace GrpcService.Core.Interfaces
 {
     public interface IFantasticBeastRepository
     {
-        RepoResponse AddCreature(CreatureDbModel creature);
-        CreatureDbModel GetCreatureById(string id);
-        List<CreatureDbModel> GetCreatures();
+        RepoResponse AddCreature(Creature creature);
+        Creature GetCreatureById(string id);
+        List<Creature> GetCreatures();
         RepoResponse ReserveCreature(string id, string branchId);
     }
 
