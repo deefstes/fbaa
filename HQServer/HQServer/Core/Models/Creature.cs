@@ -3,13 +3,25 @@ using System.Text.Json.Serialization;
 
 namespace GrpcService.Core.Models
 {
-    public class CreatureDbModel
+    public class Creature
     {
-        public CreatureDbModel() { }
+        public string Id { get; set; } = null!;
+        public DateTime DateAdded { get; set; }
+        public string Name { get; set; } = null!;
+        public Rarity Rarity { get; set; }
+        public string Species { get; set; } = null!;
+        public string Description { get; set; } = null!;
+        public int Age { get; set; } = 0;
+        public List<SpecialAbility> Abilities { get; set; } = new List<SpecialAbility>();
+        public Dictionary<string, string> Attributes { get; set; } = new Dictionary<string, string>();
+        public bool Available { get; set; } = false;
+        public string BranchId { get; set; } = null!;
 
-        public CreatureDbModel(string json)
+        public Creature() { }
+
+        public Creature(string json)
         {
-            var creature = JsonSerializer.Deserialize<CreatureDbModel>(json, new JsonSerializerOptions
+            var creature = JsonSerializer.Deserialize<Creature>(json, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true,
                 WriteIndented = true,
@@ -34,18 +46,6 @@ namespace GrpcService.Core.Models
                 WriteIndented = true
             });
         }
-
-        public string Id { get; set; }
-        public DateTime DateAdded { get; set; }
-        public string Name { get; set; }
-        public Rarity Rarity { get; set; }
-        public string Species { get; set; }
-        public string Description { get; set; }
-        public int Age { get; set; }
-        public List<SpecialAbility> Abilities { get; set; }
-        public Dictionary<string, string> Attributes { get; set; }
-        public bool Available { get; set; }
-        public string BranchId { get; set; }
     }
 
     [JsonConverter(typeof(JsonStringEnumConverter))]

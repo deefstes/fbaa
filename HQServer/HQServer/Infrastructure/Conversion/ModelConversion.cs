@@ -5,7 +5,7 @@ namespace GrpcService.Infrastructure.Conversion
 {
     public static class ModelConversion
     {
-        public static CreatureResponse ToGrpcModel(CreatureDbModel dbModel)
+        public static CreatureResponse ToGrpcModel(Creature dbModel)
         {
             var c = new CreatureResponse
             {
@@ -37,9 +37,9 @@ namespace GrpcService.Infrastructure.Conversion
             return c;
         }
 
-        public static CreatureDbModel ToDbModel(AddCreatureRequest grpcModel)
+        public static Creature ToDbModel(AddCreatureRequest grpcModel)
         {
-            var c = new CreatureDbModel
+            var c = new Creature
             {
                 Id = Guid.NewGuid().ToString(),
                 DateAdded = DateTime.UtcNow,
