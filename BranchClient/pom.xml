@@ -101,8 +101,7 @@
                                 <outputTarget>
                                     <type>grpc-java</type>
                                     <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.15.0</pluginArtifact>
-<!--                                    <outputDirectory>target/generated-sources</outputDirectory>-->
-                                    <outputDirectory>src/main/java</outputDirectory>
+                                    <outputDirectory>target/generated-sources</outputDirectory>
                                 </outputTarget>
                             </outputTargets>
                         </configuration>

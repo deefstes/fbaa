@@ -89,6 +89,4 @@ public class FBAAGrpcImpl {
 
         Empty empty = fbaaBlockingStub.reserveCreature(request);
     }
-
-
 }
