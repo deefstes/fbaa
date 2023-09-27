@@ -1,12 +1,9 @@
 package wiz.fbaa.branchclient.proto;
 
-import org.apache.commons.io.IOUtils;
-import wiz.fbaa.branchclient.branch.BranchConfig;
 import wiz.fbaa.branchclient.grpc.Fbaa;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.RandomAccessFile;
 import java.util.UUID;
 
 public class ProtoToFile {
@@ -35,7 +32,6 @@ public class ProtoToFile {
             System.out.println(request);
 
         } catch (Exception e) {
-            e.printStackTrace();
         }
 
     }
